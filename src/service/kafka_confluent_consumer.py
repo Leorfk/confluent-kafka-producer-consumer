@@ -4,7 +4,6 @@ import logging
 from util import logging_config
 
 logging_config.init_logs(logging.INFO)
-
 kafka_conf = {
     'bootstrap.servers': '127.0.0.1:9092',
     'group.id': 'mygroup',
@@ -40,6 +39,3 @@ def consume():
         payload: {msg.value().decode('utf-8')}''')
 
     c.close()
-
-
-list_topics()
