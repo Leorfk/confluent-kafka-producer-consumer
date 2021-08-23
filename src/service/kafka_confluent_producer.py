@@ -1,9 +1,6 @@
 from confluent_kafka import Producer
 import logging
-from util import logging_config
 from datetime import datetime
-
-logging_config.init_logs(logging.INFO)
 
 eventos = [
     {'nome': 'leonardo', 'idade': 26},
@@ -25,18 +22,18 @@ def delivery_report(err, msg):
         logging.info('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
 
 
-for c in range(10000):
-    for data in eventos:
-        # Trigger any available delivery report callbacks from previous produce() calls
-        p.poll(0)
-        data.update({'data_cadastro': str(datetime.now())})
-        logging.info(data)
-        # Asynchronously produce a message, the delivery report callback
-        # will be triggered from poll() above, or flush() below, when the message has
-        # been successfully delivered or failed permanently.
-        p.produce('xap', str(data).encode('utf-8'), callback=delivery_report)
+def gerar_massa():
+    for c in range(10000):
+        for data in eventos:
+            # Trigger any available delivery report callbacks from previous produce() calls
+            p.poll(0)
+            data.update({'data_cadastro': str(datetime.now())})
+            logging.info(data)
+            # Asynchronously produce a message, the delivery report callback
+            # will be triggered from poll() above, or flush() below, when the message has
+            # been successfully delivered or failed permanently.
+            p.produce('xap', str(data).encode('utf-8'), callback=delivery_report)
 
-    # Wait for any outstanding messages to be delivered and delivery report
-    # callbacks to be triggered.
-p.flush()
-
+        # Wait for any outstanding messages to be delivered and delivery report
+        # callbacks to be triggered.
+    p.flush()

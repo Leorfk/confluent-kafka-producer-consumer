@@ -25,12 +25,18 @@ def list_topics():
 
 def consume():
     logging.info('Começou!!!')
-
+    contador = 0
     while True:
         msg = c.poll(1.0)
 
         if msg is None:
-            continue
+            contador +=1
+            logging.warning(contador)
+            if contador == 10:
+                logging.warning('COnsumer será desligado, pois não existem mais eventos a serem consumidos')
+                c.close()
+            else:
+                continue
         if msg.error():
             logging.error("Consumer error: {}".format(msg.error()))
             continue
