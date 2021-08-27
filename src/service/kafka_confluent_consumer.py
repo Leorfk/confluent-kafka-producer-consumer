@@ -71,4 +71,5 @@ def eventos_na_estica():
             except KafkaException as ex:
                 logging.error(ex)
 
+
 eventos_na_estica()
