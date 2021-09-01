@@ -7,13 +7,13 @@ Implementação de um consumer e um producer kafka
 Um projeot simples que tem como finalidade a consolidação de conhecimentos na implementação de clientes kafka
 
 ### INSTALAÇÃO LOCAL
-####Configuração Kafka
+###Configuração Kafka
 • Realize a instalalção do Apache Kafka e Zookeeper.
 • Após instalar o kafka, vá até o diretório *kafka_`version` e execute o seguinte comando
 `bin/kafka-server-start.sh config/server.properties`
 • Para criar um tópico execute o seguinte comando
 `bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic <nome do topico>`
-####Configuração do projeto python
+###Configuração do projeto python
 • Para executar o projeto, primeiro execute o seguinte comando no diretório raiz do projeto
 `$ pip install -r requirements.txt`
 • Para executar o producer kafka execute o seguinte comando
