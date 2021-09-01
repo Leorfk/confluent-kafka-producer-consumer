@@ -44,7 +44,8 @@ def consume(topic):
         if msg.error():
             logging.error("Consumer error: {}".format(msg.error()))
             continue
-        logging.info(f'''header: {msg.headers()},payload: {msg.value().decode('utf-8')}''')
+        logging.info(f'''header: {msg.headers()},payload: {msg.value()
+        .decode('utf-8')}''')
         c.commit()
 
 
@@ -66,7 +67,8 @@ def eventos_na_estica(topic):
             continue
         try:
             for msg in msgs:
-                logging.info(f'''header: {msg.headers()},payload: {msg.value().decode('utf-8')}''')
+                logging.info(f'''header: {msg.headers()},payload: 
+{msg.value().decode('utf-8')}''')
                 c.commit(msg)
 
         except KafkaException as ex:
@@ -74,8 +76,9 @@ def eventos_na_estica(topic):
 
 
 if __name__ == '__main__':
-    topics = ['LOJA_NOVO_PEDIDO', 'topico.comando.teste', 'ECOMMERCE_SEND_EMAIL', 'xap', 'ECOMMERCE_NEW_ORDER',
-         'kafka-python-topic']
+    topics = ['LOJA_NOVO_PEDIDO', 'topico.comando.teste',
+              'ECOMMERCE_SEND_EMAIL', 'xap', 'ECOMMERCE_NEW_ORDER',
+              'kafka-python-topic']
     for topic in topics:
         logging.info(topic)
         Process(target=eventos_na_estica, args=(topic,)).start()
