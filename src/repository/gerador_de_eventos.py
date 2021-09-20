@@ -2,7 +2,7 @@ from datetime import datetime
 from random import randint
 from uuid import uuid4
 import random
-names = ['xap', 'toma', 'deita', 'alou', 'haha', 'rhtrg', 'egrhtjer4f', 'werterfef', 'wegrerfgfqw']
+names = ['PETTER PAN', 'HITMAN', 'BANANA', 'MACACO LOUCO', 'LUFFY', 'ZORO', 'CHINPANZE ALBINO', 'AMY', 'ALA']
 
 
 def generate_event():
