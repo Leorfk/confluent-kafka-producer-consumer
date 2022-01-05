@@ -10,15 +10,18 @@ Um projeto simples que tem como finalidade a consolidação de conhecimentos na 
 ###Configuração Kafka
 - Realize a instalalção do Apache Kafka e Zookeeper.
 - Após instalar o kafka, vá até o diretório *kafka_`versão do kafka` e execute o seguinte comando
+
 ```bash
 bin/kafka-server-start.sh config/server.properties```
 
 - Para criar um tópico execute o seguinte comando
+
 ```bash
 bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic <nome do topico>```
 
 ###Configuração do projeto python
 - Para executar o projeto, primeiro execute o seguinte comando no diretório raiz do projeto
+
 ```bash
 pip install -r requirements.txt```
 - Para executar o producer kafka execute o seguinte comando
