@@ -8,9 +8,9 @@ names = ['PETTER PAN', 'HITMAN', 'BANANA', 'MACACO LOUCO', 'LUFFY', 'ZORO', 'CHI
 def generate_event():
     return {
         'nome': random.choice(names),
-        'data': str(datetime.today()),
-        'CPF': randint(0, 99999999999),
-        'rg': randint(0, 999999999),
+        'data_criacao': str(datetime.today()),
+        'cpf_cnpj_cliente': str(randint(0, 99999999999)),
+        'rg': str(randint(0, 999999999)),
         'valor_lancamento': round(randint(0, 1000000) / 3, 2)
     }
 

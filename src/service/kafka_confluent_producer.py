@@ -20,7 +20,8 @@ def delivery_report(err, msg):
 def gerar_massa(topic):
     try:
         inicio_processo = datetime.today()
-        for c in range(20000):
+        logging.info('Gerando massa')
+        for c in range(2000):
             p.produce(topic=topic,
                       value=str(generate_event()).encode('utf-8'),
                       callback=delivery_report,
@@ -54,11 +55,11 @@ def diff_days(date1, date2):
     # d2 = datetime.strptime(date2, "%Y-%m-%d %H:%M:%S.%f")
     return abs(date1 - date2)
 
-if __name__ == '__main__':
-    topicos = ['pix-conciliacao', 'pix-devolucao-emitida', 'pix-devolucao-recebida', 'pix-emitido', 'pix-recebido']
-    # gerar_massa('pix-conciliacao')
-    for topico in topicos:
-        #gerar_massa_multi(topico)
-        for c in range(10):
-            Process(target=gerar_massa_multi, args=(topico,)).start()
-        logging.info(f'iniciando o producer para o tópico: {topico}')
+# if __name__ == '__main__':
+#     topicos = ['pix-conciliacao', 'pix-devolucao-emitida', 'pix-devolucao-recebida', 'pix-emitido', 'pix-recebido']
+#     # gerar_massa('pix-conciliacao')
+#     for topico in topicos:
+#         #gerar_massa_multi(topico)
+#         for c in range(10):
+#             Process(target=gerar_massa_multi, args=(topico,)).start()
+#         logging.info(f'iniciando o producer para o tópico: {topico}')

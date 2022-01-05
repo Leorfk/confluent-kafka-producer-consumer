@@ -1,5 +1,4 @@
 from confluent_kafka import Consumer, KafkaException
-from confluent_kafka.admin import AdminClient
 import logging
 from multiprocessing import Process
 from util import logging_config
@@ -11,20 +10,13 @@ from time import sleep
 kafka_conf = {
     'bootstrap.servers': '127.0.0.1:9092',
     'group.id': 'consumer-kafka-pix',
-    'auto.offset.reset': 'latest',
+    'auto.offset.reset': 'earliest',
     'enable.auto.commit': False
 }
 
-def list_topics():
-    admin = AdminClient(kafka_conf)
-    topics = admin.list_topics().topics
-    logging.info(topics)
-    for k, v in topics.items():
-        logging.info(f'{k} - {len(v.partitions)}')
-
 
 def consume(topic):
-    kafka_conf.update({'debug': 'broker, cgrp'})
+    # kafka_conf.update({'debug': 'broker, cgrp'})
     c = Consumer(kafka_conf)
     c.subscribe(topic)
     logging.info('Começou!!!')
@@ -38,14 +30,8 @@ def consume(topic):
             logging.error("Consumer error: {}".format(msg.error()))
             continue
         contador+=1
-        logging.info(contador)
-        # logging.info(f'''header: {msg.headers()},payload: {msg.value().decode('utf-8')}''')
-        c.commit()
-        if contador == 1:
-            data_inicio = datetime.today()
-        if contador == 2000:
-            logging.info(abs(data_inicio - datetime.today()))
-            # 2k de mensagem uma a uma 0:00:00.164783
+        logging.info(f'''header: {msg.headers()},payload: {msg.value().decode('utf-8')}''')
+        # c.commit()
 
 
 def eventos_na_estica(topic):
