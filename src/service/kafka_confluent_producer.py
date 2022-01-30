@@ -21,7 +21,7 @@ def gerar_massa(topic):
     try:
         inicio_processo = datetime.today()
         logging.info('Gerando massa')
-        for c in range(2000):
+        for c in range(20):
             p.produce(topic=topic,
                       value=str(generate_event()).encode('utf-8'),
                       callback=delivery_report,
@@ -29,6 +29,7 @@ def gerar_massa(topic):
             p.poll(0.1)
             p.flush()
         fim_processo = datetime.today()
+        print('massa gerada')
         logging.info(f'{topic} - {diff_days(inicio_processo, fim_processo)}')
     except (KafkaError, BufferError) as error:
         logging.error(f'Deu pau no producer {topic}, motivo: {error}')

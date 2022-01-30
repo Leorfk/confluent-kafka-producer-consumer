@@ -1,0 +1,31 @@
+{
+    "fields": [
+        {
+            "name": "numero_agencia",
+            "type": "string"
+        },
+        {
+            "name": "numero_conta",
+            "type": "string"
+        },
+        {
+            "name": "digito_verificador",
+            "type": "string"
+        },
+        {
+            "name": "valor_transacao_financeira",
+            "type": "string"
+        },
+        {
+            "name": "data_contabilizacao",
+            "type": "string"
+        },
+        {
+            "name": "codigo_identificador_cliente",
+            "type": "string"
+        }
+    ],
+    "name": "pagamentos_pix_emitido",
+    "namespace": "pagamentos_pix_emitido",
+    "type": "record"
+}

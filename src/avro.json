@@ -1,0 +1,23 @@
+{
+    "namespace": "io.com.pagamentos.pix.emitido",
+    "type": "record",
+    "name": "Pagamento",
+    "fields": [
+        {
+            "name": "nome_titular",
+            "type": "string"
+        },
+        {
+            "name": "numero_conta",
+            "type": "string"
+        },
+        {
+            "name": "valor_transacao",
+            "type": "Decimal"
+        },
+        {
+            "name": "data_contabil",
+            "type": "string"
+        }
+    ]
+}

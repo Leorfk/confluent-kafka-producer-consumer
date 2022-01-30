@@ -1,0 +1,47 @@
+{
+    "name": "pagamentos_pix_recebido",
+    "namespace": "pagamentos_pix_recebido",
+    "type": "record",
+    "fields": [
+        {
+            "name": "origem",
+            "type": {
+                "type": "array",
+                "items": {
+                    "name": "operador_origem",
+                    "type": "record",
+                    "fields": [
+                        {
+                            "name": "identificador_origem",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "numero_agencia",
+            "type": "string"
+        },
+        {
+            "name": "numero_conta",
+            "type": "string"
+        },
+        {
+            "name": "digito_verificador",
+            "type": "string"
+        },
+        {
+            "name": "valor_transacao_financeira",
+            "type": "string"
+        },
+        {
+            "name": "data_contabilizacao",
+            "type": "string"
+        },
+        {
+            "name": "codigo_identificador_cliente",
+            "type": "string"
+        }
+    ]
+}

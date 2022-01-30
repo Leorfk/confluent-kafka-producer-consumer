@@ -1,17 +1,17 @@
 from confluent_kafka import Consumer, KafkaException
+from confluent_kafka.avro import AvroConsumer
 import logging
 from multiprocessing import Process
 from util import logging_config
 logging_config.init_logs(logging.DEBUG)
 from datetime import datetime
-import os
-from time import sleep
 
 kafka_conf = {
     'bootstrap.servers': '127.0.0.1:9092',
     'group.id': 'consumer-kafka-pix',
     'auto.offset.reset': 'earliest',
-    'enable.auto.commit': False
+    'enable.auto.commit': False,
+    'partition.assignment.strategy': 'cooperative-sticky'
 }
 
 
@@ -21,7 +21,6 @@ def consume(topic):
     c.subscribe(topic)
     logging.info('Começou!!!')
     contador = 0
-    data_inicio = None
     while True:
         msg = c.poll(0.1)
         if msg is None:
@@ -29,7 +28,6 @@ def consume(topic):
         if msg.error():
             logging.error("Consumer error: {}".format(msg.error()))
             continue
-        contador+=1
         logging.info(f'''header: {msg.headers()},payload: {msg.value().decode('utf-8')}''')
         # c.commit()
 
@@ -59,9 +57,9 @@ def eventos_na_estica(topic):
             logging.error(ex)
 
 
-if __name__ == '__main__':
-    topicos = ['pix-conciliacao', 'pix-devolucao-emitida', 'pix-devolucao-recebida', 'pix-emitido', 'pix-recebido']
-    #eventos_na_estica(['pix-conciliacao'])
-    for topic in topicos:
-        logging.info(topic)
-        Process(target=eventos_na_estica, args=([topic],)).start()
+# if __name__ == '__main__':
+#     topicos = ['pix-conciliacao', 'pix-devolucao-emitida', 'pix-devolucao-recebida', 'pix-emitido', 'pix-recebido']
+#     #eventos_na_estica(['pix-conciliacao'])
+#     for topic in topicos:
+#         logging.info(topic)
+#         Process(target=eventos_na_estica, args=([topic],)).start()
