@@ -29,10 +29,11 @@ def pega_tipo_nao_nulo(tipos):
 
 
 def gerador_tipo_map(field):
-    if isinstance(field['items'], dict):
-        return dict([(lorem_key.sentence(), generateData(field['items'])) for i in range(3)])
+    # {'type': 'map', 'values': 'int'}
+    if isinstance(field['values'], dict):
+        return dict([(lorem_key.sentence(), generateData(field['values'])) for i in range(3)])
     else:
-        return dict([(lorem_key.sentence(), gerador_por_tipo(field['items'])) for i in range(3)])
+        return dict([(lorem_key.sentence(), gerador_por_tipo(field['values'])) for i in range(3)])
 
 
 def gerador_tipo_array(field):
