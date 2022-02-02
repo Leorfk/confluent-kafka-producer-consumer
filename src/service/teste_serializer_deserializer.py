@@ -15,11 +15,11 @@ def serialize_event(event: dict, memis):
 
 
 def lo_xap(toma, deita):
-    return 'pagamentos-pix-recebido-value'
+    return 'pagamentos-pix-devolucao-recebida-value'
 
 def o_abafa():
     sm_client = SchemaRegistryClient({'url': 'http://localhost:8081'})
-    avro_str = AvroService().get_avro_schema(sm_client, 'pagamentos-pix-recebido-value')
+    avro_str = AvroService().get_avro_schema(sm_client, 'pagamentos-pix-devolucao-recebida-value')
     logging.info(avro_str)
     s_conf = {'auto.register.schemas': False, 'subject.name.strategy': lo_xap}
     serializer = AvroSerializer(

@@ -7,3 +7,8 @@ class AvroService:
         subjects = schema_registry_client.get_subjects()
         print(subjects)
         return schema_registry_client.get_latest_version(subject_name).schema.schema_str
+
+    def get_avro(self, schema_registry_client, subject_name):
+        subjects = schema_registry_client.get_subjects()
+        print(subjects)
+        return schema_registry_client.get_latest_version(subject_name)

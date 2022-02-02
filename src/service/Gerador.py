@@ -29,7 +29,6 @@ def pega_tipo_nao_nulo(tipos):
 
 
 def gerador_tipo_map(field):
-    # {'type': 'map', 'values': 'int'}
     if isinstance(field['values'], dict):
         return dict([(lorem_key.sentence(), generateData(field['values'])) for i in range(3)])
     else:

@@ -1,0 +1,67 @@
+{
+    "name": "pagamentos_pix_devolucao_recebida",
+    "namespace": "pagamentos_pix_devolucao_recebida",
+    "type": "record",
+    "fields": [
+        {
+            "name": "origem",
+            "type": {
+                "type": "array",
+                "items": {
+                    "name": "operador_origem",
+                    "type": "record",
+                    "fields": [
+                        {
+                            "name": "identificador_origem",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "numero_agencia",
+            "type": "string"
+        },
+        {
+            "name": "numero_conta",
+            "type": "string"
+        },
+        {
+            "name": "digito_verificador",
+            "type": "string"
+        },
+        {
+            "name": "valor_transacao_financeira",
+            "type": "string"
+        },
+        {
+            "name": "data_contabilizacao",
+            "type": "string"
+        },
+        {
+            "name": "codigo_identificador_cliente",
+            "type": "string"
+        },
+        {
+            "name": "lo_xap",
+            "type": {
+                "type": "map",
+                "values": "int"
+            }
+        },
+        {
+            "name": "meme",
+            "type": {
+                "type": "enum",
+                "name": "meme_enum",
+                "symbols": [
+                    "TOMA",
+                    "XAP",
+                    "HAHA",
+                    "MAMOU"
+                ]
+            }
+        }
+    ]
+}
