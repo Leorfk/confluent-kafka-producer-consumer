@@ -7,6 +7,7 @@ from confluent_kafka.schema_registry import (SchemaRegistryClient,
                                              record_subject_name_strategy,
                                              reference_subject_name_strategy)
 from confluent_kafka.schema_registry.avro import AvroSerializer
+from confluent_kafka.serialization import SerializationContext
 from uuid import uuid4
 
 evento = {
@@ -25,28 +26,26 @@ header = {
 }
 sm_client = SchemaRegistryClient({'url': 'http://localhost:8081'})
 config = ProducerConfig(sm_client)
-# conf_avro = config.get_serializing_producer_configs(
-#     kafka_broker='127.0.0.1:9092', subject_name='pagamentos-pix-emitido-value')
+conf_avro = config.get_serializing_producer_configs(
+    kafka_broker='127.0.0.1:9092', subject_name='pagamentos-pix-emitido-value')
 
-# producer = ProducerAvro(conf_avro)
-# producer.send_message(topico='pagamentos-pix-emitido',
-#                       evento=evento, header=header)
+producer = ProducerAvro(conf_avro)
+producer.send_message(topico='pagamentos-pix-emitido',
+                      evento=evento, header=header)
 
 conf_generic = config.get_generic_producer_configs('127.0.0.1:9092')
 
-
-def to_dict(msg, ctx):
-    return msg
-
-def lo_xap(ctx, toma):
-    return 'pagamentos-pix-emitido-value'
+def custom_go_horse_strategy(ctx, toma):
+    topic = toma.split('.')[0].replace("_", "-")
+    ctx = SerializationContext(topic, 'value')
+    return ctx.topic + "-" + ctx.field
 
 schema_str = sm_client.get_latest_version(
     'pagamentos-pix-emitido-value').schema.schema_str
 serializer_conf = {'auto.register.schemas': False,
-                   'subject.name.strategy': lo_xap}
+                   'subject.name.strategy': custom_go_horse_strategy}
 serializer = AvroSerializer(schema_registry_client=sm_client,
-                            schema_str=schema_str, to_dict=None, conf=serializer_conf)
+                            schema_str=schema_str, conf=serializer_conf)
 
 evento_bytes = serializer(evento, None)
 print(evento_bytes)
