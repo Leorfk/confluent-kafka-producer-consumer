@@ -36,8 +36,6 @@ producer.send_message(topico='pagamentos-pix-emitido',
 conf_generic = config.get_generic_producer_configs('127.0.0.1:9092')
 
 def custom_go_horse_strategy(ctx, toma):
-    topic = toma.split('.')[0].replace("_", "-")
-    ctx = SerializationContext(topic, 'value')
     return ctx.topic + "-" + ctx.field
 
 schema_str = sm_client.get_latest_version(
@@ -47,7 +45,8 @@ serializer_conf = {'auto.register.schemas': False,
 serializer = AvroSerializer(schema_registry_client=sm_client,
                             schema_str=schema_str, conf=serializer_conf)
 
-evento_bytes = serializer(evento, None)
+ctx = SerializationContext('pagamentos-pix-emitido', 'value')
+evento_bytes = serializer(evento, ctx)
 print(evento_bytes)
 producer = ProducerGeneric(conf_generic)
 producer.send_message(topico='pagamentos-pix-emitido',
