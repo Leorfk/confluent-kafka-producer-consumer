@@ -21,7 +21,7 @@ def o_abafa():
     sm_client = SchemaRegistryClient({'url': 'http://localhost:8081'})
     avro_str = AvroService().get_avro_schema(sm_client, 'pagamentos-pix-devolucao-recebida-value')
     logging.info(avro_str)
-    s_conf = {'auto.register.schemas': False, 'subject.name.strategy': topic_subject_name_strategy}
+    s_conf = {'auto.register.schemas': False, 'subject.name.strategy': lo_xap}
     serializer = AvroSerializer(
         schema_registry_client=sm_client,
         schema_str=avro_str,

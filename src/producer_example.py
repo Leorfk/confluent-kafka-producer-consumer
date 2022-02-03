@@ -1,6 +1,12 @@
 from toma_kafka.producer.producer_config import ProducerConfig
 from toma_kafka.producer.producer_avro import ProducerAvro
-from confluent_kafka.schema_registry import SchemaRegistryClient
+from toma_kafka.producer.producer_generic import ProducerGeneric
+from confluent_kafka.schema_registry import (SchemaRegistryClient,
+                                             topic_subject_name_strategy,
+                                             topic_record_subject_name_strategy,
+                                             record_subject_name_strategy,
+                                             reference_subject_name_strategy)
+from confluent_kafka.schema_registry.avro import AvroSerializer
 from uuid import uuid4
 
 evento = {
@@ -18,9 +24,32 @@ header = {
     'type': 'pagamentos-pix-emitido-value'
 }
 sm_client = SchemaRegistryClient({'url': 'http://localhost:8081'})
-conf = ProducerConfig(sm_client).get_serializing_producer_configs(
-    kafka_broker='127.0.0.1:9092', subject_name='pagamentos-pix-emitido-value')
-producer = ProducerAvro(conf)
+config = ProducerConfig(sm_client)
+# conf_avro = config.get_serializing_producer_configs(
+#     kafka_broker='127.0.0.1:9092', subject_name='pagamentos-pix-emitido-value')
 
+# producer = ProducerAvro(conf_avro)
+# producer.send_message(topico='pagamentos-pix-emitido',
+#                       evento=evento, header=header)
+
+conf_generic = config.get_generic_producer_configs('127.0.0.1:9092')
+
+
+def to_dict(msg, ctx):
+    return msg
+
+def lo_xap(ctx, toma):
+    return 'pagamentos-pix-emitido-value'
+
+schema_str = sm_client.get_latest_version(
+    'pagamentos-pix-emitido-value').schema.schema_str
+serializer_conf = {'auto.register.schemas': False,
+                   'subject.name.strategy': lo_xap}
+serializer = AvroSerializer(schema_registry_client=sm_client,
+                            schema_str=schema_str, to_dict=None, conf=serializer_conf)
+
+evento_bytes = serializer(evento, None)
+print(evento_bytes)
+producer = ProducerGeneric(conf_generic)
 producer.send_message(topico='pagamentos-pix-emitido',
-                      evento=evento, header=header)
+                      evento=evento_bytes, header=header)

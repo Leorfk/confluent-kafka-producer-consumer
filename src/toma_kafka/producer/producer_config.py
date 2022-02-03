@@ -30,3 +30,9 @@ class ProducerConfig:
         if custom_configs:
             config.update(custom_configs)
         return config
+
+    def get_generic_producer_configs(self, kafka_broker: str, custom_configs=None):
+        config = {'bootstrap.servers': kafka_broker}
+        if custom_configs:
+            config.update(custom_configs)
+        return config
