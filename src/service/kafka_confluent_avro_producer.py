@@ -27,10 +27,10 @@ serializer = AvroSerializer(
     to_dict=serialize_event)
 
 serializer(evento, None)
-# producer_configs = {'bootstrap.servers': '127.0.0.1:9092',
-#                 'key.serializer': StringSerializer('utf_8'),
-#                 'value.serializer': serializer}
-# producer = SerializingProducer(producer_configs)
+producer_configs = {'bootstrap.servers': '127.0.0.1:9092',
+                'key.serializer': StringSerializer('utf_8'),
+                'value.serializer': serializer}
+producer = SerializingProducer(producer_configs)
 
-# producer.produce('pagamentos-pix-emitido', value=evento, key=str(uuid4()))
-# producer.flush()
+producer.produce('pagamentos-pix-emitido', value=evento, key=str(uuid4()))
+producer.flush()

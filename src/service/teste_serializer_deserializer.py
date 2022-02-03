@@ -2,7 +2,7 @@ from service.poc_kafka_xap import consumir
 from util import logging_config
 from uuid import uuid4
 from service.avro_service import AvroService
-from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.schema_registry import SchemaRegistryClient, topic_subject_name_strategy
 from confluent_kafka.schema_registry.avro import AvroSerializer, AvroDeserializer
 from service.Gerador import generateData
 import logging
@@ -21,7 +21,7 @@ def o_abafa():
     sm_client = SchemaRegistryClient({'url': 'http://localhost:8081'})
     avro_str = AvroService().get_avro_schema(sm_client, 'pagamentos-pix-devolucao-recebida-value')
     logging.info(avro_str)
-    s_conf = {'auto.register.schemas': False, 'subject.name.strategy': lo_xap}
+    s_conf = {'auto.register.schemas': False, 'subject.name.strategy': topic_subject_name_strategy}
     serializer = AvroSerializer(
         schema_registry_client=sm_client,
         schema_str=avro_str,
