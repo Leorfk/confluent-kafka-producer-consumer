@@ -28,5 +28,6 @@ def batch_consumer():
             message = deserializer(msg.value(), None)
             print(msg.value())
             print(message)
+        consumer.commit()
 
 batch_consumer()
